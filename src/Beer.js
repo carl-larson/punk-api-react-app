@@ -1,4 +1,6 @@
 import React from 'react';
+import ListItem from './ListItem'
+import  './App.css'
 
 class Beer extends React.Component {
     constructor(props) {
@@ -10,7 +12,7 @@ class Beer extends React.Component {
         };
     }
     
-        componentDidMount() {
+    componentDidMount() {
         fetch("https://api.punkapi.com/v2/beers")
             .then(res => res.json())
             .then(
@@ -28,21 +30,23 @@ class Beer extends React.Component {
             })
         }
     
-        render() {
+
+    render() {
         const { error, isLoaded, beers } = this.state;
+        
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
             return (
-            <ul>
-                {beers.map(beer => (
-                <li key={beer.id}>
-                    {beer.id}-{beer.name}--{beer.tagline}
-                </li>
-                ))}
-            </ul>
+            <div>
+                <ul>
+                    {beers.map(beer => (
+                    <ListItem beer={beer}></ListItem>
+                    ))}
+                </ul>
+            </div>
             );
         }
     }
